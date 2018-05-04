@@ -5,6 +5,8 @@
  */
 package com.example.burak_000.client;
 
+import android.widget.Button;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,12 +29,13 @@ public class Client {
     public static ObjectOutputStream sOutput;
 
     public static void Start(String ip, int port,String message) {
-
+        MainActivity m = new MainActivity();
+        MainActivity.text.setText("Server' a baglandı");
         try {
             // Client Soket nesnesi
             Client.socket = new Socket(ip, port);
             Client.Display("Servera bağlandı");
-            // input stream
+            MainActivity.text.setText("Server' a baglandı");
             Client.sInput = new ObjectInputStream(Client.socket.getInputStream());
             // output stream
             Client.sOutput = new ObjectOutputStream(Client.socket.getOutputStream());
@@ -51,9 +54,7 @@ public class Client {
     }
 
     public static void Display(String msg) {
-
         System.out.println(msg);
-
     }
 
 }

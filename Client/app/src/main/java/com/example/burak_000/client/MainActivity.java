@@ -21,7 +21,12 @@ public class MainActivity extends AppCompatActivity {
 
     Button forward;
     Button back;
-    TextView text;
+    Button sag;
+    Button sol;
+    Button dur;
+    Button sol360;
+    public static TextView text;
+
     private Socket s;
     private ServerSocket ss;
     private static InputStreamReader isr;
@@ -29,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private static PrintWriter pr;
 
     String message="";
-    static String ip="192.168.1.102";
-    static int port=5000;
+    static String ip="192.168.43.126";
+    static int port=5001;
 
     final Context context = this;
     private Button button;
@@ -45,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         forward = (Button) findViewById(R.id.ileri);
         back = (Button) findViewById(R.id.geri);
+        sag = (Button) findViewById(R.id.sag);
+        sol = (Button) findViewById(R.id.sol);
+        dur = (Button) findViewById(R.id.dur);
+        sol360 = (Button) findViewById(R.id.sol360);
         text = (TextView)findViewById(R.id.textView);
 
         MyTask mt = new MyTask();
@@ -59,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
             forward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                text.setText("İleri gidiyor");
 
-                    message = text.getText().toString();
+                    message = "İleri";
                     Client.Start(ip, port,message);
 
                     /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -78,11 +86,48 @@ public class MainActivity extends AppCompatActivity {
             back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    text.setText("Geri gidiyor");
-                    message = text.getText().toString();
+                    //text.setText();
+                    message = "Geri";
                     Client.Start(ip, port,message);
                 }
             });
+
+            sag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    //text.setText("Geri gidiyor");
+                    message = "Sag";
+                    Client.Start(ip, port,message);
+                }
+            });
+
+            sol.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    //text.setText("Geri gidiyor");
+                    message = "Sol";
+                    Client.Start(ip, port,message);
+                }
+            });
+
+            dur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    //text.setText("Geri gidiyor");
+                    message = "Dur";
+                    Client.Start(ip, port,message);
+                }
+            });
+
+            sol360.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    //text.setText("Geri gidiyor");
+                    message = "360";
+                    Client.Start(ip, port,message);
+                }
+            });
+
 
             return null;
         }
