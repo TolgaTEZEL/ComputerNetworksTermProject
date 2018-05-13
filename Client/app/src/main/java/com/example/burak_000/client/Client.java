@@ -30,26 +30,34 @@ public class Client {
 
     public static void Start(String ip, int port,String message) {
         MainActivity m = new MainActivity();
-        MainActivity.text.setText("Server' a baglandı");
+        MainActivity.text.setText("Connected to server");
         try {
             // Client Soket nesnesi
-            Client.socket = new Socket(ip, port);
-            Client.Display("Servera bağlandı");
-            MainActivity.text.setText("Server' a baglandı");
-            Client.sInput = new ObjectInputStream(Client.socket.getInputStream());
-            // output stream
-            Client.sOutput = new ObjectOutputStream(Client.socket.getOutputStream());
-            Client.Display(Client.sInput.readObject().toString());
-            Client.sOutput.writeObject(message);
 
-            sOutput.flush();
-            sOutput.close();
-            socket.close();
+            if( (Client.socket = new Socket(ip, port))!=null ){
+                Client.Display("Connected to server");
+                Client.sInput = new ObjectInputStream(Client.socket.getInputStream());
+                // output stream
+                Client.sOutput = new ObjectOutputStream(Client.socket.getOutputStream());
+                Client.Display(Client.sInput.readObject().toString());
+                Client.sOutput.writeObject(message);
+
+                sOutput.flush();
+                sOutput.close();
+                socket.close();
+
+            }else{
+                MainActivity.text.setText("Unable to connect to server");
+            }
+            //Client.socket = new Socket(ip, port);
+
 
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Client.Display("Unable to connect to server");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Client.Display("Unable to connect to server");
         }
     }
 

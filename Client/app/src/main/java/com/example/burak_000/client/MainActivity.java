@@ -3,7 +3,6 @@ package com.example.burak_000.client;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.StrictMode;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -24,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
     Button sag;
     Button sol;
     Button dur;
-    Button sol360;
+    Button conn;
+    EditText ipT;
+    EditText portT;
+
+
     public static TextView text;
 
     private Socket s;
@@ -34,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private static PrintWriter pr;
 
     String message="";
-    static String ip="192.168.43.126";
-    static int port=5001;
-
+    static String ip="";
+    static int port;
     final Context context = this;
     private Button button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,10 @@ public class MainActivity extends AppCompatActivity {
         sag = (Button) findViewById(R.id.sag);
         sol = (Button) findViewById(R.id.sol);
         dur = (Button) findViewById(R.id.dur);
-        sol360 = (Button) findViewById(R.id.sol360);
+        conn = (Button) findViewById(R.id.conn);
         text = (TextView)findViewById(R.id.textView);
+        ipT = (EditText) findViewById(R.id.ipText);
+        portT = (EditText) findViewById(R.id.portText);
 
         MyTask mt = new MyTask();
         mt.execute();
@@ -65,6 +71,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params){
+
+            conn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    message = "b";
+                    ip=ipT.getText().toString();
+                    port=Integer.parseInt(portT.getText().toString());
+                    try{
+                        Client.Start(ip, port,message);
+                        text.setText("Connected to server");
+                    }catch (ExceptionInInitializerError ex){
+                        text.setText("Unable to connect to server");
+                    }
+
+                }
+            });
+
             forward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -119,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            sol360.setOnClickListener(new View.OnClickListener() {
+            /*sol360.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
                     //text.setText("Geri gidiyor");
                     message = "360";
                     Client.Start(ip, port,message);
                 }
-            });
+            });*/
 
 
             return null;
